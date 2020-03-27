@@ -1,7 +1,25 @@
-const focusTextField = document.querySelector('#name').focus();
-const jobRole = document.querySelectorAll('#title');
-const form = document.querySelector('form');
+const focusTextField = document.querySelector('#name').focus(); //Sets a focus state on the Name textfield
+const otherTextField = document.querySelector('#other-title');
+const select = document.querySelector('#title');
 
-for (let index = 0; index < jobRole.length; index++) {
-    console.log(jobRole.item[index]);
-}
+/*JOB ROLE SECTION*/ 
+/*
+    - Hide the Other text-field section initially
+    - Added an Event Listener that listens for a click and if Other is 
+    selected from the Job Roles the text-field will appear
+*/ 
+otherTextField.style.display = 'none';
+
+select.addEventListener('click', () => {
+    if (select.value === 'other') {
+        console.log(select.value);      
+        otherTextField.style.display = '';        
+    } else {
+        console.log(select.value);
+        otherTextField.style.display = 'none'; 
+    }
+});
+
+
+
+/** T SHIRT INFO **/
