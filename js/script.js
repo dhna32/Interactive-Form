@@ -166,3 +166,90 @@ selectValue.addEventListener('change', (e) =>{
         creditCard.style.display = '';
     }
 });
+
+
+/*FORM VALIDATION AND VALIDATION MESSAGES*/ 
+const form = document.querySelector("form");
+const name = document.querySelector('#name');
+const email = document.querySelector('#mail');
+const cardNumber = document.querySelector('#cc-num');
+const zipCode = document.querySelector('#zip');
+const cvv = document.querySelector('#cvv');
+//activitySection 
+//checkboxes
+
+const nameValidator = () => {
+    const nameValue = name.value;
+    if(nameValue.length > 0){
+        name.style.border = '1px solid white';
+        return true;
+    }else{
+        name.style.border = '2px solid red';
+        return false;
+    }
+}
+
+
+const emailValidator = () => {
+    const emailValue = email.value;
+    const indexOfemail = email.value.indexOf('@');
+    const lastIndexOxEmail = email.value.lastIndexOf('.');
+
+    if(indexOfemail > 1 && lastIndexOxEmail > indexOfemail+1 ){
+        email.style.border = '1px solid white';
+        return true;
+    }else{
+        email.style.border = '2px solid red';
+        return false;
+    }
+
+}
+
+const validator = document.createElement('h3');
+activitySection.appendChild(validator);
+
+
+const activityValidator = () => {
+    const checkboxes = document.querySelectorAll('.activities input'); //gets all the checkboxes
+
+    for (let i = 0; i < checkboxes.length; i++) {
+        if(checkboxes[i].checked){
+
+            return true;
+        } 
+    }
+
+}
+
+
+const creditCardValidator = () => {
+
+}
+
+
+const zipCodeValidator = () => {
+
+}
+
+
+const cvvValidator = () => {
+
+}
+
+form.addEventListener('submit', (e) => {
+
+    if(!nameValidator()){
+        e.preventDefault();
+    }
+
+    if(!emailValidator()){
+        e.preventDefault();
+    }
+
+   /* if(!activityValidator()){
+        e.preventDefault();
+    }
+*/
+
+    console.log('Submit handler is functional!');
+   });
