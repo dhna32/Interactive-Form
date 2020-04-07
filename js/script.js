@@ -1,3 +1,9 @@
+/*PROJECT 3: INTERACTIVE FORM
+    BY: DIEGO HERNANDEZ NAVARRO 
+    07/04/2020
+*/ 
+
+
 const focusTextField = document.querySelector('#name').focus(); //Sets a focus state on the Name textfield
 const otherTextField = document.querySelector('#other-title');
 const select = document.querySelector('#title');
@@ -169,6 +175,8 @@ selectValue.addEventListener('change', (e) =>{
 
 
 /*FORM VALIDATION AND VALIDATION MESSAGES*/ 
+
+
 const form = document.querySelector("form");
 const name = document.querySelector('#name');
 const email = document.querySelector('#mail');
@@ -178,6 +186,7 @@ const cvv = document.querySelector('#cvv');
 //activitySection 
 //checkboxes
 
+//name validator
 const nameValidator = () => {
     const nameValue = name.value;
     if(nameValue.length > 0){
@@ -189,7 +198,7 @@ const nameValidator = () => {
     }
 }
 
-
+//email validator
 const emailValidator = () => {
     const emailValue = email.value;
     const indexOfemail = email.value.indexOf('@');
@@ -205,37 +214,101 @@ const emailValidator = () => {
 
 }
 
-const validator = document.createElement('h3');
-activitySection.appendChild(validator);
+const activityValidatorWarning = document.createElement('h3');
+activitySection.appendChild(activityValidatorWarning);
 
-
+//activity section validator
 const activityValidator = () => {
     const checkboxes = document.querySelectorAll('.activities input'); //gets all the checkboxes
-
     for (let i = 0; i < checkboxes.length; i++) {
         if(checkboxes[i].checked){
-
+            activityValidatorWarning.style.display = 'none' /*Only works for submit buttons */ 
             return true;
         } 
     }
-
+    activityValidatorWarning.innerHTML = 'PLEASE SELECT AN ACTIVITY';
+    activityValidatorWarning.style.color = 'black';
+    activityValidatorWarning.style.display = ''
+    return false;
 }
 
 
+//payment section validator
+
+        /*THIS SURELY CAN BE IMPROVED*/ 
+const payment = document.querySelector('.payment');
+const div = document.createElement('div')
+const cardNumberError = document.createElement('h4');
+const zipCodeError = document.createElement('h4');
+const cvvError = document.createElement('h4');
+
+cardNumberError.innerHTML = 'Card number must be 13-16 continued digits';
+zipCodeError.innerHTML = 'ZipCode must be 5 digits';
+cvvError.innerHTML = 'Cvv must be 3 digits';
+
+payment.appendChild(div);
+div.appendChild(cardNumberError);
+div.appendChild(zipCodeError);
+div.appendChild(cvvError);
+div.style.display = 'none'
+const paymentErrorMessage = (error) => {
+    if(error === true){
+        div.style.display = ''
+        return div;
+    } else{
+        div.style.display = 'none'
+        return div;
+    }
+    
+}
+
+//cvv validator
 const creditCardValidator = () => {
-
+    const creditCardValue = cardNumber.value;
+    console.log(creditCardValue);
+    console.log(creditCardValue.length);
+    if(selectValue.value === 'credit card' &&  !(creditCardValue.length > 12 && creditCardValue.length < 17)){
+        cardNumber.style.border = '2px solid red';
+        paymentErrorMessage(true);
+        return false;
+    }
+    cardNumber.style.border = '2px solid rgb(111, 157, 220)';
+    paymentErrorMessage(false);
+    return true;
 }
 
-
+//cvv validator
 const zipCodeValidator = () => {
-
+    const zipCodeValue = zipCode.value;
+    console.log(zipCodeValue);
+    console.log(zipCodeValue.length);
+    if(selectValue.value === 'credit card' &&  zipCodeValue.length !== 5){
+        zipCode.style.border = '2px solid red';
+       paymentErrorMessage(true);
+        return false;
+    }
+    zipCode.style.border = '2px solid rgb(111, 157, 220)';
+    paymentErrorMessage(false);
+    return true;
 }
 
-
+//cvv validator
 const cvvValidator = () => {
-
+    const cvvValue = cvv.value;
+    console.log(cvvValue);
+    console.log(cvvValue.length);
+    if(selectValue.value === 'credit card' &&  cvvValue.length !== 3){
+        cvv.style.border = '2px solid red';
+        paymentErrorMessage(true);
+        return false;
+    }
+    cvv.style.border = '2px solid rgb(111, 157, 220)';
+   paymentErrorMessage(false);
+    return true;
 }
 
+
+/*Listens for submit events and prevents default browser actions*/ 
 form.addEventListener('submit', (e) => {
 
     if(!nameValidator()){
@@ -246,10 +319,19 @@ form.addEventListener('submit', (e) => {
         e.preventDefault();
     }
 
-   /* if(!activityValidator()){
+    if(!activityValidator()){
         e.preventDefault();
     }
-*/
+    if(!creditCardValidator()){
+        e.preventDefault();
+    }
+    if(!zipCodeValidator()){
+        e.preventDefault();
+    }
+    if(!cvvValidator()){
+        e.preventDefault();
+    }
+
 
     console.log('Submit handler is functional!');
    });
