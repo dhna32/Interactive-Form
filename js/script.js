@@ -155,6 +155,7 @@ paypal.style.display = 'none';
 bitcoin.style.display = 'none';
 
 const selectValue = document.querySelector('#payment');
+selectValue.value = 'credit card';
 console.log(selectValue.value);
 
 selectValue.addEventListener('change', (e) =>{
